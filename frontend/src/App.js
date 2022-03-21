@@ -126,7 +126,7 @@ export default function App() {
     <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
       <div>
         <form className="m-4" onSubmit={handleSubmit}>
-          <div className="credit-card w-full lg:w-4/4 sm:w-auto shadow-lg mx-auto rounded-xl bg-white">
+          <div className="credit-card w-full lg:w-3/4 sm:w-auto shadow-lg mx-auto rounded-xl bg-white">
             <main className="mt-4 p-4">
               <h1 className="text-xl font-semibold text-gray-700 text-center">
                 Read From Smart Contract
