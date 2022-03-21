@@ -1,5 +1,3 @@
-# ZT-Stake-app
-
 # Blockgames x Zuri x Nestcoin [Task 5]
 
 ### Stake Contract Address
