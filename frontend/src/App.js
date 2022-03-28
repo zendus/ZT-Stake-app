@@ -8,9 +8,9 @@ export default function App() {
   const erc20abi = abi.abi;
   const [txs, setTxs] = useState([]);
   const [contractListened, setContractListened] = useState();
-  const [error, setError] = useState();
+  // const [error, setError] = useState();
   const [introMessage, setintroMessage] = useState(
-    "Click The Get Info Token Button Below To Connect Rinkeby Account And Load Smart Contract"
+    "Click The GET TOKEN INFO Button Below To Connect Rinkeby Account And Load Smart Contract"
   );
   const [contractInfo, setContractInfo] = useState({
     address: "-",
@@ -59,7 +59,7 @@ export default function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const data = new FormData(e.target);
+    // const data = new FormData(e.target);
     const provider = new ethers.providers.Web3Provider(window.ethereum);
 
     const erc20 = new ethers.Contract(
@@ -111,9 +111,19 @@ export default function App() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     await provider.send("eth_requestAccounts", []);
     const signer = await provider.getSigner();
-    const signerAddress = await signer.getAddress();
+    // const signerAddress = await signer.getAddress();
     const erc20 = new ethers.Contract(contractInfo.address, erc20abi, signer);
     await erc20.stakeToken(data.get("amount"));
+  };
+
+  const unstakeToken = async (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    const signer = await provider.getSigner();
+    const erc20 = new ethers.Contract(contractInfo.address, erc20abi, signer);
+    await erc20.unstakeToken(data.get("amount"));
   };
 
   const buyToken = async (e) => {
@@ -153,7 +163,7 @@ export default function App() {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+    <div className="grid grid-cols-1 gap-2 md:grid-cols-2 ">
       <div>
         <form className="m-4" onSubmit={handleSubmit}>
           <div className="credit-card w-full lg:w-4/4 sm:w-auto shadow-lg mx-auto rounded-xl bg-white">
@@ -271,17 +281,6 @@ export default function App() {
             </div>
           </div>
         </form>
-
-        {/* <div className="m-4 credit-card w-full lg:w-3/4 sm:w-auto shadow-lg mx-auto rounded-xl bg-white">
-          <div className="mt-4 p-4">
-            <h1 className="text-xl font-semibold text-gray-700 text-center">
-              Recent transactions
-            </h1>
-            <p>
-              <TxList txs={txs} />
-            </p>
-          </div>
-        </div> */}
       </div>
       <div>
         <div className="m-4 credit-card w-full lg:w-3/4 sm:w-auto shadow-lg mx-auto rounded-xl bg-white">
@@ -305,6 +304,24 @@ export default function App() {
                   className="btn btn-success submit-button focus:ring focus:outline-none w-full"
                 >
                   Stake Tokens
+                </button>
+              </footer>
+            </form>
+            <form onSubmit={unstakeToken}>
+              <div className="my-3">
+                <input
+                  type="text"
+                  name="amount"
+                  className="input input-bordered block w-full focus:ring focus:outline-none"
+                  placeholder="Amount to Tokens to Unstake"
+                />
+              </div>
+              <footer className="p-4">
+                <button
+                  type="submit"
+                  className="btn btn-success submit-button focus:ring focus:outline-none w-full"
+                >
+                  UnStake Tokens
                 </button>
               </footer>
             </form>
@@ -349,13 +366,24 @@ export default function App() {
                   type="submit"
                   className="btn btn-success submit-button focus:ring focus:outline-none w-full"
                 >
-                  Transfer
+                  Transfer Tokens
                 </button>
               </footer>
             </form>
           </div>
         </div>
       </div>
+
+      {/* <div className="m-4 credit-card w-full lg:w-3/4 sm:w-auto shadow-lg mx-auto rounded-xl bg-white">
+        <div className="mt-4 p-4">
+          <h1 className="text-xl font-semibold text-gray-700 text-center">
+            Recent transactions
+          </h1>
+          <p>
+            <TxList txs={txs} />
+          </p>
+        </div>
+      </div> */}
     </div>
   );
 }
